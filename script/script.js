@@ -1,20 +1,45 @@
-!function(){
+! function () {
     var duration = 50;
-    function writeCode(prefix,code,fn){
+    var actions = document.querySelector('.actions')
+    // console.log(actions)
+    actions.addEventListener('click', function (e) {
+        var button = e.target
+        var speed = button.id
+        var brothers = getBrothers(button)
+        brothers.forEach(function (el) {
+            el.classList.remove('active')
+        })
+        button.classList.add('active')
+        switch (speed) {
+            case 'slow':
+                duration = 100
+                break
+            case 'normal':
+                duration = 50
+                break
+            case 'fast':
+                duration = 10
+                break
+        }
+    })
+
+    function writeCode(prefix, code, fn) {
         let container = document.querySelector('#code')
         let styleTag = document.querySelector('#styleTag')
-        let n =0
-        setTimeout(function run(){
+        let n = 0
+        
+        var timer = setTimeout(function run() {
             n++
-            container.innerHTML = code.substring(0,n)
-            styleTag.innerHTML = code.substring(0,n)
+            container.innerHTML = code.substring(0, n)
+            styleTag.innerHTML = code.substring(0, n)
             container.scrollTop = container.scrollHeight
-            if(n < code.length){
-                setTimeout(run,duration)
-            }else{
+            if (n < code.length) {
+                setTimeout(run, duration)
+            } else {
                 fn && fn.call()
             }
         })
+
     }
     let code = `
     /* 大家好,今天给你们画一只皮卡丘 */
@@ -164,38 +189,15 @@
     } 
     /* 好了,画完了, 谢谢欣赏 */
     `
-    writeCode('',code)
+    writeCode('', code)
 
-    var actions = document.querySelector('.actions')
-    // console.log(actions)
-    actions.addEventListener('click',function(e){
-        var button = e.target
-        var speed = button.id
-        var brothers = getBrothers(button)
-        brothers.forEach(function(el){
-            el.classList.remove('active')
-        })
-        button.classList.add('active')
-        switch(speed){
-            case 'slow':
-                duration = 100
-                break
-            case 'normal':
-                duration = 50
-                break
-            case 'fast':
-                duration = 10
-                break
-        }
-    })
-    function getBrothers(button){
+
+    function getBrothers(button) {
         var elements = button.parentNode.children;
-        // console.log(typeof(elements))
         var brothers = [];
-        for(var i=0;i<elements.length;i++){
-            // console.log(elements[i])
-            if(elements[i].id !== button.id){
-                 brothers.push(elements[i])
+        for (var i = 0; i < elements.length; i++) {
+            if (elements[i].id !== button.id) {
+                brothers.push(elements[i])
             }
         }
         return brothers

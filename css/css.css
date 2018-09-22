@@ -41,6 +41,7 @@ body{
     font-size: 18px;
     font-weight:600;
     color:white;
+    cursor: pointer;
 }
 .actions>button.active{
     background:#2486ff;
